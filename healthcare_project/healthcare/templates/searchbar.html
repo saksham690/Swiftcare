@@ -1,0 +1,499 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftCare - Find Your Doctor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/searchbar.css' %}">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="{% url 'patient_page' %}">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>SwiftCare</span>
+                    </a>
+                </div>
+                
+                <div class="nav-menu">
+                    <ul class="nav-links">
+                        <li><a href="{% url 'home' %}">Swift Cart</a></li>
+                        <li class="active"><a href="{% url 'searchbar' %}">Find Doctors</a></li>
+                        <li><a href="{% url 'About_Us' %}">About Us</a></li>
+                        <li><a href="{% url 'Contact_Us' %}">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="user-menu dropdown">
+                        <button class="user-button">
+                            <i class="fas fa-user-circle"></i>
+                            <span>My Account</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'user_appointments' %}"><i class="fas fa-calendar-check"></i> My Appointments</a></li>
+                            <li><a href="{% url 'lab_reports' %}"><i class="fas fa-file-medical"></i> Lab Reports</a></li>
+                            <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            <li class="divider"></li>
+                        </ul>
+                    </div>
+                    
+                    <button class="mobile-menu-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Find The Right Doctor, Right Now</h1>
+                <p>Search from thousands of specialists, primary care physicians, and more</p>
+                
+                <form method="GET" action="{% url 'searchbar' %}" class="search-form">
+                    {% csrf_token %}
+                    <div class="search-inputs">
+                        <div class="form-group">
+                            <i class="fas fa-search"></i>
+                            <input type="text" name="query" placeholder="Search by specialty or condition" value="{{ query|default:'' }}">
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" name="location" placeholder="Enter location" value="{{ location|default:'York, PA 17403' }}">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-search">Search Doctors</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Messages -->
+            <div class="messages">
+                {% for message in messages %}
+                <div class="toast toast-{{ message.tags }}" role="alert">
+                    <div class="toast-icon">
+                        {% if message.tags == 'success' %}
+                            <i class="fas fa-check-circle"></i>
+                        {% elif message.tags == 'error' %}
+                            <i class="fas fa-exclamation-circle"></i>
+                        {% elif message.tags == 'warning' %}
+                            <i class="fas fa-exclamation-triangle"></i>
+                        {% else %}
+                            <i class="fas fa-info-circle"></i>
+                        {% endif %}
+                    </div>
+                    <div class="toast-content">{{ message }}</div>
+                    <button class="toast-close" data-dismiss="toast">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Filters Section -->
+            <section class="filters-section">
+                <div class="filters-header">
+                    <h2>Filters</h2>
+                    <button class="btn btn-outline-primary btn-sm" id="resetFilters">
+                        <i class="fas fa-sync-alt"></i> Reset
+                    </button>
+                </div>
+                
+                <div class="filters-container">
+                    <form method="GET" action="{% url 'searchbar' %}" class="filter-form" id="filterForm">
+                        <input type="hidden" name="query" value="{{ query|default:'' }}">
+                        <input type="hidden" name="location" value="{{ location|default:'York, PA 17403' }}">
+                        
+                        <div class="filter-group">
+                            <label for="sort_by">Sort By</label>
+                            <div class="select-wrapper">
+                                <select name="sort_by" id="sort_by" class="filter-select">
+                                    <option value="relevance" {% if sort_by == 'relevance' %}selected{% endif %}>Relevance</option>
+                                    <option value="distance" {% if sort_by == 'distance' %}selected{% endif %}>Distance</option>
+                                    <option value="rating" {% if sort_by == 'rating' %}selected{% endif %}>Rating</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="rating_filter">Minimum Rating</label>
+                            <div class="select-wrapper">
+                                <select name="rating_filter" id="rating_filter" class="filter-select">
+                                    <option value="">Any Rating</option>
+                                    <option value="5" {% if rating_filter == '5' %}selected{% endif %}>5 Stars</option>
+                                    <option value="4" {% if rating_filter == '4' %}selected{% endif %}>4+ Stars</option>
+                                    <option value="3" {% if rating_filter == '3' %}selected{% endif %}>3+ Stars</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <div class="checkbox-wrapper">
+                                <input type="checkbox" id="new_patients" name="new_patients" value="true" {% if new_patients %}checked{% endif %}>
+                                <label for="new_patients" class="checkbox-label">Accepts New Patients</label>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group filter-actions">
+                            <button type="button" class="btn btn-outline-primary" id="moreFilters">
+                                <i class="fas fa-sliders-h"></i> More Filters
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section">
+                <div class="results-header">
+                    <h2>Featured Doctors</h2>
+                    <span class="results-count">{{ doctors|length }} Results</span>
+                </div>
+
+                <div class="doctor-cards">
+                    {% if doctors %}
+                        {% for doctor in doctors %}
+                        <div class="doctor-card">
+                            <div class="doctor-info">
+                                <div class="doctor-image">
+                                    {% if doctor.image_url %}
+                                    <img src="{{ doctor.image_url }}" alt="{{ doctor.name }}">
+                                    {% else %}
+                                    <div class="image-placeholder">
+                                        <i class="fas fa-user-md"></i>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="doctor-details">
+                                    <div class="doctor-name-rating">
+                                        <h3 class="doctor-name">{{ doctor.name|default:'Unnamed Doctor' }}</h3>
+                                        <div class="doctor-rating">
+                                            {% for i in "12345" %}
+                                                {% if forloop.counter <= doctor.rating|default:0 %}
+                                                    <i class="fas fa-star"></i>
+                                                {% else %}
+                                                    <i class="far fa-star"></i>
+                                                {% endif %}
+                                            {% endfor %}
+                                            <span class="rating-count">({{ doctor.rating_count|default:0 }})</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="doctor-specialty">{{ doctor.speciality|default:'Unknown Specialty' }}</p>
+                                    
+                                    <div class="doctor-stats">
+                                        <div class="stat-item">
+                                            <i class="fas fa-briefcase"></i>
+                                            <span>{{ doctor.experience|default:0 }} Years Experience</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span>{{ doctor.distance|default:'N/A' }} miles away</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <i class="fas fa-phone"></i>
+                                            <span>{{ doctor.phone|default:'N/A' }}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <p class="doctor-address">{{ doctor.address|default:'Address unavailable' }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="doctor-actions">
+                                <form method="POST" action="{% url 'request_appointment' %}" class="appointment-form">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="doctor_id" value="{{ doctor.id }}">
+                                    <div class="appointment-date">
+                                        <label for="date-{{ doctor.id }}">Select Date</label>
+                                        <input type="date" name="requested_date" id="date-{{ doctor.id }}" class="date-input" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block">Request Appointment</button>
+                                </form>
+                                <a href="{% url 'doctordes' doctor.id %}" class="btn btn-outline btn-lg btn-block">
+                                    <i class="fas fa-user-md"></i> View Profile
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-results">
+                            <i class="fas fa-search"></i>
+                            <h3>No doctors found</h3>
+                            <p>Try adjusting your search criteria or location to find more doctors.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <div class="logo">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>SwiftCare</span>
+                    </div>
+                    <p>Connecting patients with the right healthcare professionals since 2020.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Find a Doctor</a></li>
+                        <li><a href="#">Our Services</a></li>
+                        <li><a href="#">Health Insurance</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section links">
+                    <h3>For Patients</h3>
+                    <ul>
+                        <li><a href="#">Patient Portal</a></li>
+                        <li><a href="#">Medical Records</a></li>
+                        <li><a href="#">Book Appointment</a></li>
+                        <li><a href="#">Payment Options</a></li>
+                        <li><a href="#">Patient Resources</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section contact">
+                    <h3>Contact Us</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Medical Drive, York, PA 17403</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>7876606325</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>swiftcare.help@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 SwiftCare. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (mobileMenuToggle && navMenu) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    mobileMenuToggle.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+            
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        const parent = this.parentElement;
+                        parent.classList.toggle('active');
+                    }
+                });
+            });
+            
+            const toastCloseButtons = document.querySelectorAll('.toast-close');
+            
+            toastCloseButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const toast = this.parentElement;
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                });
+            });
+            
+            const toasts = document.querySelectorAll('.toast');
+            
+            toasts.forEach(toast => {
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                }, 5000);
+            });
+            
+            const filterSelects = document.querySelectorAll('.filter-select');
+            
+            filterSelects.forEach(select => {
+                select.addEventListener('change', function() {
+                    const form = this.closest('form');
+                    if (form) {
+                        form.submit();
+                    }
+                });
+            });
+            
+            const newPatientsCheckbox = document.getElementById('new_patients');
+            
+            if (newPatientsCheckbox) {
+                newPatientsCheckbox.addEventListener('change', function() {
+                    const form = this.closest('form');
+                    if (form) {
+                        form.submit();
+                    }
+                });
+            }
+            
+            const resetFiltersButton = document.getElementById('resetFilters');
+            
+            if (resetFiltersButton) {
+                resetFiltersButton.addEventListener('click', function() {
+                    const baseUrl = window.location.href.split('?')[0];
+                    window.location.href = baseUrl;
+                });
+            }
+            
+            const moreFiltersButton = document.getElementById('moreFilters');
+            
+            if (moreFiltersButton) {
+                moreFiltersButton.addEventListener('click', function() {
+                    alert('Additional filters would appear in a modal or expanded section.');
+                });
+            }
+            
+            const logoutButton = document.getElementById('logoutButton');
+            
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = logoutUrl;
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = 'csrfmiddlewaretoken';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+                    document.body.appendChild(form);
+                    form.submit();
+                });
+            }
+            
+            const dateInputs = document.querySelectorAll('.date-input');
+            
+            if (dateInputs.length > 0) {
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                const formattedDate = tomorrow.toISOString().split('T')[0];
+                
+                dateInputs.forEach(input => {
+                    if (!input.value) {
+                        input.value = formattedDate;
+                    }
+                    const today = new Date().toISOString().split('T')[0];
+                    input.setAttribute('min', today);
+                });
+            }
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            const doctorCards = document.querySelectorAll('.doctor-card');
+            
+            if (doctorCards.length > 0 && 'IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                doctorCards.forEach(card => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                    observer.observe(card);
+                });
+            }
+        });
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        if (typeof logoutUrl === 'undefined') {
+            const logoutUrl = '/logout/';
+        }
+
+        if (typeof csrfToken === 'undefined') {
+            const csrfToken = getCookie('csrftoken');
+        }
+    </script>
+</body>
+</html>

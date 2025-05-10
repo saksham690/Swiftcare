@@ -1,0 +1,31 @@
+payload for http://127.0.0.1:5000
+
+
+{
+  "reviewer_name": "John Doe",
+  "reviewer_email": "john.doe@example.com",
+  "rating": 4,
+  "comment_text": "This product worked really well for me!"
+}
+
+
+
+http://localhost:5001
+
+{
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com",
+  "phone": "1234567890",
+  "address": "123 Main St, City",
+  "message": "Interested in your services.",
+  "agreeTerms": true
+}
+
+
+http://localhost:5002
+
+{
+  "patient_email": "john.doe@example.com",
+  "doctor_id": "123",
+  "doctor_speciality": "Cardiology"
+}

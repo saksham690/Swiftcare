@@ -1,0 +1,240 @@
+      /* General Styles */
+      :root {
+        --primary-color: #3b82f6;
+        --text-color: #1f2937;
+        --light-bg: #f3f4f6;
+        --white: #ffffff;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        color: var(--text-color);
+        line-height: 1.6;
+        padding-top: 76px;
+      }
+
+      /* Navbar Styles */
+      .navbar {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand {
+        font-weight: 600;
+        color: var(--primary-color) !important;
+      }
+
+      .health-icon {
+        color: var(--primary-color);
+        font-weight: bold;
+        margin-right: 8px;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      /* Hero Section */
+      .hero-section {
+        padding: 80px 0;
+        background-color: #eff6ff;
+      }
+
+      .hero-section h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+      }
+
+      .hero-section .lead {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+      }
+
+      .hero-image {
+        border-radius: 20px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Stats Section */
+      .stats-section {
+        background-color: var(--light-bg);
+        padding: 60px 0;
+      }
+
+      .stats-section h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--primary-color);
+      }
+
+      .stats-section .col-md-3 {
+        margin-bottom: 30px;
+      }
+
+      .stats-section .text-primary {
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+
+      .stats-section p {
+        font-size: 1rem;
+        font-weight: 400;
+      }
+
+      /* Doctors Section */
+      .doctors-section {
+        padding: 80px 0;
+      }
+
+      .doctors-section h2 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+      }
+
+      .doctors-section p {
+        font-size: 1.125rem;
+        color: var(--text-color);
+      }
+
+      .doctor-card {
+        box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .doctor-card img {
+        width: 100%;
+        height: 360px;
+      }
+
+      .doctor-card .card-body {
+        padding: 20px;
+      }
+
+      .doctor-card h5 {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .doctor-card .specialty {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: #6b7280;
+      }
+
+      .doctor-card .rating {
+        font-size: 1rem;
+        color: #fbbf24;
+      }
+
+      .doctor-card .stars {
+        color: #fbbf24;
+        margin-right: 5px;
+      }
+
+      /* Services Section */
+      .services-section {
+        background-color: var(--light-bg);
+        padding: 80px 0;
+      }
+
+      .services-section h2 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+      }
+
+      .services-section p {
+        font-size: 1.125rem;
+        text-align: center;
+        color: var(--text-color);
+        margin-bottom: 40px;
+      }
+
+      .service-card {
+        background-color: var(--white);
+        box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 30px;
+        border-radius: 8px;
+      }
+
+      .service-icon {
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+      }
+
+      .service-list {
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      .service-list li {
+        font-size: 1rem;
+        color: var(--text-color);
+        margin-bottom: 10px;
+      }
+
+      /* Features Section */
+      .features-section {
+        padding: 80px 0;
+      }
+
+      .features-section h2 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+      }
+
+      .features-section p {
+        font-size: 1.125rem;
+        text-align: center;
+        color: var(--text-color);
+        margin-bottom: 40px;
+      }
+
+      .feature-card {
+        background-color: var(--white);
+        box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+      }
+
+      .feature-icon {
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+      }
+
+      /* Modal Styles */
+      .modal-content {
+        background-color: var(--white);
+        border-radius: 10px;
+        padding: 2rem;
+      }
+
+      .modal-header {
+        border-bottom: 1px solid #ddd;
+      }
+
+      .modal-body {
+        padding: 1rem;
+      }
+
+      .modal-footer {
+        border-top: 1px solid #ddd;
+      }
+
+      .btn-modal {
+        width: 100%;
+        padding: 10px;
+      }

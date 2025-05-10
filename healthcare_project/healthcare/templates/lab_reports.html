@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftCare - Lab Reports</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/searchbar.css' %}">
+    <style>
+        .lab-reports-section {
+            margin-bottom: 3rem;
+        }
+        .lab-report-card {
+            background: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .lab-report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .lab-report-header h3 {
+            font-size: 1.5rem;
+            color: #1e293b;
+        }
+        .lab-report-details p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            color: #475569;
+        }
+        .lab-report-details p strong {
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="{% url 'patient_page' %}">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>SwiftCare</span>
+                    </a>
+                </div>
+                
+                <div class="nav-menu">
+                    <ul class="nav-links">
+                        <li><a href="{% url 'home' %}">Swift Cart</a></li>
+                        <li><a href="{% url 'searchbar' %}">Find Doctors</a></li>
+                        <li><a href="{% url 'About_Us' %}">About Us</a></li>
+                        <li><a href="{% url 'Contact_Us' %}">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="user-menu dropdown">
+                        <button class="user-button">
+                            <i class="fas fa-user-circle"></i>
+                            <span>My Account</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'user_appointments' %}"><i class="fas fa-calendar-check"></i> My Appointments</a></li>
+                            <li><a href="{% url 'lab_reports' %}"><i class="fas fa-file-medical"></i> Lab Reports</a></li>
+                            <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                    <button class="mobile-menu-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Messages -->
+            <div class="messages">
+                {% for message in messages %}
+                <div class="toast toast-{{ message.tags }}" role="alert">
+                    <div class="toast-icon">
+                        {% if message.tags == 'success' %}
+                            <i class="fas fa-check-circle"></i>
+                        {% elif message.tags == 'error' %}
+                            <i class="fas fa-exclamation-circle"></i>
+                        {% elif message.tags == 'warning' %}
+                            <i class="fas fa-exclamation-triangle"></i>
+                        {% else %}
+                            <i class="fas fa-info-circle"></i>
+                        {% endif %}
+                    </div>
+                    <div class="toast-content">{{ message }}</div>
+                    <button class="toast-close" data-dismiss="toast">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Lab Reports Section -->
+            <section Rob section -->
+            <section class="lab-reports-section">
+                <div class="lab-report-header">
+                    <h2>My Lab Reports</h2>
+                    <a href="{% url 'searchbar' %}" class="btn btn-outline btn-sm">
+                        <i class="fas fa-arrow-left"></i> Back to Search
+                    </a>
+                </div>
+                {% if lab_reports %}
+                    {% for report in lab_reports %}
+                    <div class="lab-report-card">
+                        <div class="lab-report-header">
+                            <h3>Lab Report - {{ report.created_at }}</h3>
+                            <span>Doctor Speciality: {{ report.doctor_speciality }}</span>
+                        </div>
+                        <div class="lab-report-details">
+                            <p><strong>Patient Name:</strong> {{ report.report_data.patient_name }}</p>
+                            <p><strong>Test Date:</strong> {{ report.report_data.test_date }}</p>
+                            <p><strong>Blood Pressure:</strong> {{ report.report_data.blood_pressure }}</p>
+                            <p><strong>Heart Rate:</strong> {{ report.report_data.heart_rate }}</p>
+                            <p><strong>Glucose Level:</strong> {{ report.report_data.glucose_level }}</p>
+                            <p><strong>Cholesterol:</strong> {{ report.report_data.cholesterol }}</p>
+                            <p><strong>Notes:</strong> {{ report.report_data.notes }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-results">
+                        <i class="fas fa-file-medical"></i>
+                        <h3>No lab reports found</h3>
+                        <p>You have no lab reports available at this time.</p>
+                    </div>
+                {% endif %}
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <div class="logo">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>SwiftCare</span>
+                    </div>
+                    <p>Connecting patients with the right healthcare professionals since 2020.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Find a Doctor</a></li>
+                        <li><a href="#">Our Services</a></li>
+                        <li><a href="#">Health Insurance</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section links">
+                    <h3>For Patients</h3>
+                    <ul>
+                        <li><a href="#">Patient Portal</a></li>
+                        <li><a href="#">Medical Records</a></li>
+                        <li><a href="#">Book Appointment</a></li>
+                        <li><a href="#">Payment Options</a></li>
+                        <li><a href="#">Patient Resources</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section contact">
+                    <h3>Contact Us</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Medical Drive, York, PA 17403</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>7876606325</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>swiftcare.help@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 SwiftCare. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (mobileMenuToggle && navMenu) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    mobileMenuToggle.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+            
+            const toastCloseButtons = document.querySelectorAll('.toast-close');
+            
+            toastCloseButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const toast = this.parentElement;
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                });
+            });
+            
+            const toasts = document.querySelectorAll('.toast');
+            
+            toasts.forEach(toast => {
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 300);
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>

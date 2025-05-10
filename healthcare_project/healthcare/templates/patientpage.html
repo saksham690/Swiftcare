@@ -1,0 +1,1468 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftCare - Your Health, Our Priority</title>
+    <link rel="stylesheet" href="{% static 'css/patientpage.css' %}">
+    <script src="https://kit.fontawesome.com/a62c1d4e42.js" crossorigin="anonymous"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="message-container" id="messageContainer">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="mainNav">
+        <div class="container">
+            <a href="{% url 'patient_page' %}" class="navbar-brand">
+                <i class="fas fa-heartbeat pulse"></i>
+                <span>SwiftCare</span>
+            </a>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="navbar-menu" id="navbarMenu">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="#services" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="#health-info" class="nav-link">Health Info</a></li>
+                    
+                    <li class="nav-item"><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="{% url 'searchbar' %}" class="btn btn-primary">Book Appointment</a>
+                    <a href="{% url 'user_appointments' %}" class="btn btn-outline">My Appointments</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with 3D Animation -->
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text fade-in">
+                    <h1>Welcome, <span class="user-name">{{ user.first_name }}</span>!</h1>
+                    <p>Your health journey is our top priority. Access your care, appointments, and health information all in one place.</p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'searchbar' %}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-calendar-plus"></i> Book Appointment
+                        </a>
+                        <a href="#services" class="btn btn-outline btn-lg">
+                            Explore Services
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual fade-in">
+                    <div class="model-container">
+                        <div class="heart-3d" id="heart3d">
+                            <div class="heart-part front"></div>
+                            <div class="heart-part back"></div>
+                            <div class="heart-part left"></div>
+                            <div class="heart-part right"></div>
+                            <div class="heart-part top"></div>
+                            <div class="heart-part bottom"></div>
+                            <div class="pulse-ring"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+                <div>
+                    <span>Scroll to explore</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-wave">
+        </div>
+    </section>
+
+    <!-- Stats Counter Section -->
+    <section id="stats" class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 class="stat-counter" data-target="320">0</h3>
+                        <p>Expert Doctors</p>
+                    </div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 class="stat-counter" data-target="15000">0</h3>
+                        <p>Happy Patients</p>
+                    </div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 class="stat-counter" data-target="45000">0</h3>
+                        <p>Appointments</p>
+                    </div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 class="stat-counter" data-target="98">0</h3>
+                        <span class="percent">%</span>
+                        <p>Satisfaction Rate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Our Healthcare Services</h2>
+                <p>Book appointments with our specialists for comprehensive care</p>
+            </div>
+            <div class="services-grid">
+                <!-- Service Card 1 -->
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-tooth"></i>
+                    </div>
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZGVudGlzdHJ5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Dental Care">
+                    </div>
+                    <div class="service-content">
+                        <h3>Dental Care</h3>
+                        <p>Comprehensive dental services including checkups, cleanings, and specialized treatments</p>
+                        <div class="service-features">
+                            <span><i class="fas fa-check-circle"></i> Regular Checkups</span>
+                            <span><i class="fas fa-check-circle"></i> Teeth Cleaning</span>
+                            <span><i class="fas fa-check-circle"></i> Cavity Treatment</span>
+                        </div>
+                        <a href="#" class="btn btn-primary">Book Appointment</a>
+                    </div>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Z3luZWNvbG9naXN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Women's Health">
+                    </div>
+                    <div class="service-content">
+                        <h3>Women's Health</h3>
+                        <p>Comprehensive gynecological care from annual exams to specialized treatments</p>
+                        <div class="service-features">
+                            <span><i class="fas fa-check-circle"></i> Annual Checkups</span>
+                            <span><i class="fas fa-check-circle"></i> Prenatal Care</span>
+                            <span><i class="fas fa-check-circle"></i> Health Screenings</span>
+                        </div>
+                        <a href="#" class="btn btn-primary">Book Appointment</a>
+                    </div>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1579684453423-f84349ef60b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2FyZGlvbG9naXN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Cardiology">
+                    </div>
+                    <div class="service-content">
+                        <h3>Cardiology</h3>
+                        <p>Specialized heart care including diagnostics, treatment and preventive care</p>
+                        <div class="service-features">
+                            <span><i class="fas fa-check-circle"></i> Heart Screening</span>
+                            <span><i class="fas fa-check-circle"></i> ECG Tests</span>
+                            <span><i class="fas fa-check-circle"></i> Cardiac Consultation</span>
+                        </div>
+                        <a href="#" class="btn btn-primary">Book Appointment</a>
+                    </div>
+                </div>
+
+                <!-- Service Card 4 -->
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bmV1cm9sb2d5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Neurology">
+                    </div>
+                    <div class="service-content">
+                        <h3>Neurology</h3>
+                        <p>Expert neurological care for conditions affecting the brain, spinal cord and nerves</p>
+                        <div class="service-features">
+                            <span><i class="fas fa-check-circle"></i> Neurological Exams</span>
+                            <span><i class="fas fa-check-circle"></i> Headache Treatment</span>
+                            <span><i class="fas fa-check-circle"></i> Movement Disorders</span>
+                        </div>
+                        <a href="#" class="btn btn-primary">Book Appointment</a>
+                    </div>
+                </div>
+
+                <!-- Service Card 5 -->
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZXllJTIwZG9jdG9yfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Ophthalmology">
+                    </div>
+                    <div class="service-content">
+                        <h3>Ophthalmology</h3>
+                        <p>Complete eye care including vision tests, corrective lenses, and surgical procedures</p>
+                        <div class="service-features">
+                            <span><i class="fas fa-check-circle"></i> Vision Tests</span>
+                            <span><i class="fas fa-check-circle"></i> Eyewear Prescription</span>
+                            <span><i class="fas fa-check-circle"></i> Eye Health Checkups</span>
+                        </div>
+                        <a href="#" class="btn btn-primary">Book Appointment</a>
+                    </div>
+                </div>
+
+                <!-- Service Card 6 -->
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-medical"></i>
+                    </div>
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dGVsZW1lZGljaW5lfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Telemedicine">
+                    </div>
+                    <div class="service-content">
+                        <h3>Telemedicine</h3>
+                        <p>Virtual consultations from the comfort of your home for various health concerns</p>
+                        <div class="service-features">
+                            <span><i class="fas fa-check-circle"></i> Video Consultations</span>
+                            <span><i class="fas fa-check-circle"></i> E-Prescriptions</span>
+                            <span><i class="fas fa-check-circle"></i> Follow-up Care</span>
+                        </div>
+                        <a href="#" class="btn btn-primary">Book Appointment</a>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all-services fade-in">
+                <a href="{% url 'searchbar' %}" class="btn btn-outline btn-lg">View All Services</a>
+            </div>
+        </div>
+        <div class="section-wave">
+        </div>
+    </section>
+
+    <!-- Health Information Section -->
+    <section id="health-info" class="health-info-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Your Health Information Center</h2>
+                <p>Track, manage, and understand your health</p>
+            </div>
+            <div class="health-info-grid">
+                <div class="health-info-card fade-in">
+                    <div class="info-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Health Metrics</h3>
+                    <p>Track your vital signs and health progress over time with our comprehensive health dashboard.</p>
+                    <a href="#" class="btn btn-outline btn-sm">Learn More</a>
+                </div>
+                <div class="health-info-card fade-in">
+                    <div class="info-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3>Medication Reminders</h3>
+                    <p>Never miss a dose with our smart reminder system that alerts you when it's time to take your medication.</p>
+                    <a href="#" class="btn btn-outline btn-sm">Learn More</a>
+                </div>
+                <div class="health-info-card fade-in">
+                    <div class="info-icon">
+                        <i class="fas fa-notes-medical"></i>
+                    </div>
+                    <h3>Medical Records</h3>
+                    <p>Access your complete medical history, test results, and doctor's notes all in one secure place.</p>
+                    <a href="#" class="btn btn-outline btn-sm">Learn More</a>
+                </div>
+                <div class="health-info-card fade-in">
+                    <div class="info-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Appointment Scheduling</h3>
+                    <p>Easily schedule, reschedule, or cancel appointments with our intuitive booking system.</p>
+                    <a href="#" class="btn btn-outline btn-sm">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Health Tips Section -->
+    <section id="health-tips" class="health-tips-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Health Tips & Resources</h2>
+                <p>Expert advice for your everyday health</p>
+            </div>
+            <div class="tips-carousel fade-in" id="tipsCarousel">
+                <div class="tips-track">
+                    <div class="tip-card">
+                        <div class="tip-img">
+                            <img src="https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Healthy Eating">
+                        </div>
+                        <div class="tip-content">
+                            <h3>Balanced Nutrition</h3>
+                            <p>Learn how to create balanced meals that provide essential nutrients for your body.</p>
+                            <a href="#" class="btn btn-text">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-img">
+                            <img src="https://images.pexels.com/photos/2780762/pexels-photo-2780762.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Regular Exercise">
+                        </div>
+                        <div class="tip-content">
+                            <h3>Fitness Routines</h3>
+                            <p>Discover simple exercises you can incorporate into your daily routine for better health.</p>
+                            <a href="#" class="btn btn-text">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-img">
+                            <img src="https://images.pexels.com/photos/3771069/pexels-photo-3771069.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Mental Wellness">
+                        </div>
+                        <div class="tip-content">
+                            <h3>Mental Wellness</h3>
+                            <p>Tips and techniques to maintain good mental health and manage stress effectively.</p>
+                            <a href="#" class="btn btn-text">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-img">
+                            <img src="https://images.pexels.com/photos/3786171/pexels-photo-3786171.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Sleep Hygiene">
+                        </div>
+                        <div class="tip-content">
+                            <h3>Better Sleep</h3>
+                            <p>Improve your sleep quality with these evidence-based sleep hygiene practices.</p>
+                            <a href="#" class="btn btn-text">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-control prev" id="tipsPrev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-control next" id="tipsNext"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <div class="section-header light fade-in">
+                <h2>Patient Experiences</h2>
+                <p>What our patients say about SwiftCare</p>
+            </div>
+            <div class="testimonial-carousel fade-in" id="testimonialCarousel">
+                <div class="testimonial-track">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"SwiftCare has transformed how I manage my healthcare. The appointment booking is seamless, and the doctors are always attentive and thorough."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="John Doe">
+                            <div>
+                                <h4>John Doe</h4>
+                                <span>Patient since 2020</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"The telemedicine option has been a lifesaver for me. I can consult with my doctor without leaving home, which is perfect for my busy schedule."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Jane Smith">
+                            <div>
+                                <h4>Jane Smith</h4>
+                                <span>Patient since 2021</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"The telemedicine option has been a lifesaver for me. I can consult with my doctor without leaving home, which is perfect for my busy schedule."</p>
+                        <div class="testimonial-author">
+                            <img src="data:image/jpeg;base64,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" alt="Jane Smith">
+                            <div>
+                                <h4>Nipun Kalra</h4>
+                                <span>Patient since 2021</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>"I love how I can access all my health information in one place. The medication reminders feature has been incredibly helpful for managing my treatment."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Mike Johnson">
+                            <div>
+                                <h4>Mike Johnson</h4>
+                                <span>Patient since 2019</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>"I love how I can access all my health information in one place. The medication reminders feature has been incredibly helpful for managing my treatment."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Mike Johnson">
+                            <div>
+                                <h4>Mike Johnson</h4>
+                                <span>Patient since 2019</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-indicators">
+                    <button class="indicator active" data-index="0"></button>
+                    <button class="indicator" data-index="1"></button>
+                    <button class="indicator" data-index="2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about our services</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item fade-in">
+                    <div class="faq-question">
+                        <h3>How do I schedule an appointment?</h3>
+                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can schedule an appointment through our online portal, mobile app, or by calling our customer service line. Our online booking system allows you to select your preferred doctor, date, and time.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question">
+                        <h3>What insurance plans do you accept?</h3>
+                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept most major insurance plans including Blue Cross Blue Shield, Aetna, Cigna, and Medicare. Please contact our billing department for specific information about your insurance coverage.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question">
+                        <h3>How do I access my medical records?</h3>
+                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can access your medical records through our secure patient portal. Simply log in with your credentials, and you'll be able to view your test results, doctor's notes, and treatment plans.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question">
+                        <h3>How does telemedicine work?</h3>
+                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our telemedicine service allows you to consult with healthcare providers via video call. Simply schedule an appointment, and you'll receive a secure link to join the virtual consultation at the appointed time.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-wave">
+            
+        </div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>SwiftCare</span>
+                    </div>
+                    <p>Providing quality healthcare services with a patient-centered approach.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#health-info">Health Info</a></li>
+                        <li><a href="{% url 'home' %}">Swift Cart</a></li>
+                        <li><a href="{% url 'searchbar' %}">Book Appointment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Healthcare Ave, Medical City</li>
+                        <li><i class="fas fa-phone"></i> +1 234 567 8900</li>
+                        <li><i class="fas fa-envelope"></i> info@swiftcare.com</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 8:00 AM - 8:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 SwiftCare. All rights reserved.</p>
+                <ul class="footer-bottom-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+
+        /**
+ * Main JavaScript for SwiftCare Healthcare Platform
+ */
+
+document.addEventListener('DOMContentLoaded', function() {
+    "use strict";
+    
+    // Get DOM elements
+    const navbar = document.getElementById('mainNav');
+    const navToggle = document.getElementById('navToggle');
+    const navbarMenu = document.getElementById('navbarMenu');
+    const backToTopBtn = document.getElementById('backToTop');
+    const faqItems = document.querySelectorAll('.faq-item');
+    const statCounters = document.querySelectorAll('.stat-counter');
+    const testimonialCarousel = document.getElementById('testimonialCarousel');
+    const testimonialTrack = testimonialCarousel.querySelector('.testimonial-track');
+    const testimonialIndicators = document.querySelectorAll('.indicator');
+    const tipsPrev = document.getElementById('tipsPrev');
+    const tipsNext = document.getElementById('tipsNext');
+    const tipsTrack = document.querySelector('.tips-track');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const alertMessages = document.querySelectorAll('.alert');
+    
+    // Initialize variables
+    let currentTestimonial = 0;
+    let currentTip = 0;
+    const testimonialCount = document.querySelectorAll('.testimonial-card').length;
+    const tipCount = document.querySelectorAll('.tip-card').length;
+    const tipCardWidth = document.querySelector('.tip-card')?.offsetWidth + 24; // Including margin
+    
+    // Handle scroll events
+    window.addEventListener('scroll', function() {
+        handleScroll();
+    });
+    
+    // Initialize the page
+    init();
+    
+    /**
+     * Initialize the page
+     */
+    function init() {
+        // Set initial state
+        handleScroll();
+        initFadeElements();
+        
+        // Set up event listeners
+        setupEventListeners();
+        
+        // Initial animations
+        setTimeout(() => {
+            document.querySelectorAll('.hero-section .fade-in').forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('visible');
+                }, index * 200);
+            });
+        }, 100);
+        
+        // Handle alerts
+        setupAlerts();
+    }
+    
+    /**
+     * Set up event listeners
+     */
+    function setupEventListeners() {
+        // Mobile menu toggle
+        if (navToggle) {
+            navToggle.addEventListener('click', toggleMobileMenu);
+        }
+        
+        // Back to top button
+        if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', scrollToTop);
+        }
+        
+        // FAQ toggles
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => toggleFAQ(item));
+        });
+        
+        // Testimonial indicators
+        testimonialIndicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                goToTestimonial(index);
+            });
+        });
+        
+        // Tips carousel navigation
+        if (tipsPrev) {
+            tipsPrev.addEventListener('click', () => {
+                navigateTips('prev');
+            });
+        }
+        
+        if (tipsNext) {
+            tipsNext.addEventListener('click', () => {
+                navigateTips('next');
+            });
+        }
+        
+        // Smooth scrolling for navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', smoothScroll);
+        });
+        
+        // Close alert messages
+        document.querySelectorAll('.btn-close').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const alert = this.closest('.alert');
+                if (alert) {
+                    alert.style.opacity = '0';
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 300);
+                }
+            });
+        });
+    }
+    
+    /**
+     * Handle scroll events
+     */
+    function handleScroll() {
+        // Sticky navbar
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+        
+        // Back to top button visibility
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+        
+        // Animate elements when they come into view
+        animateOnScroll();
+        
+        // Update active nav link based on scroll position
+        updateActiveNavLink();
+        
+        // Animate 3D heart on scroll
+        animateHeartOnScroll();
+    }
+    
+    /**
+     * Toggle mobile menu
+     */
+    function toggleMobileMenu() {
+        navToggle.classList.toggle('active');
+        navbarMenu.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+    }
+    
+    /**
+     * Scroll to top
+     */
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+    
+    /**
+     * Toggle FAQ items
+     */
+    function toggleFAQ(item) {
+        const isActive = item.classList.contains('active');
+        
+        // Close all FAQ items
+        faqItems.forEach(faq => {
+            faq.classList.remove('active');
+            const icon = faq.querySelector('.faq-icon i');
+            icon.className = 'fas fa-plus';
+        });
+        
+        // Toggle the clicked item
+        if (!isActive) {
+            item.classList.add('active');
+            const icon = item.querySelector('.faq-icon i');
+            icon.className = 'fas fa-minus';
+        }
+    }
+    
+    /**
+     * Initialize fade-in elements
+     */
+    function initFadeElements() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // If this is a counter, animate it
+                    if (entry.target.classList.contains('stat-counter')) {
+                        animateCounter(entry.target);
+                    }
+                    
+                    // Once animated, no need to observe anymore
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+        
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+    }
+    
+    /**
+     * Animate elements on scroll
+     */
+    function animateOnScroll() {
+        document.querySelectorAll('.fade-in:not(.visible)').forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            
+            if (rect.top <= windowHeight * 0.8) {
+                el.classList.add('visible');
+                
+                // If this is a counter, animate it
+                if (el.classList.contains('stat-counter')) {
+                    animateCounter(el);
+                }
+            }
+        });
+    }
+    
+    /**
+     * Animate counter elements
+     */
+    function animateCounter(counterElement) {
+        const target = parseInt(counterElement.getAttribute('data-target'), 10);
+        const duration = 2000; // ms
+        const step = target / (duration / 16); // 60fps
+        let current = 0;
+        
+        const updateCounter = () => {
+            current += step;
+            if (current < target) {
+                counterElement.textContent = Math.floor(current);
+                requestAnimationFrame(updateCounter);
+            } else {
+                counterElement.textContent = target;
+            }
+        };
+        
+        updateCounter();
+    }
+    
+    /**
+     * Go to specific testimonial
+     */
+    function goToTestimonial(index) {
+        if (index < 0) index = testimonialCount - 1;
+        if (index >= testimonialCount) index = 0;
+        
+        currentTestimonial = index;
+        
+        const cardWidth = document.querySelector('.testimonial-card').offsetWidth + parseInt(window.getComputedStyle(document.querySelector('.testimonial-card')).marginRight);
+        const offset = -1 * currentTestimonial * cardWidth;
+        
+        testimonialTrack.style.transform = `translateX(${offset}px)`;
+        
+        // Update indicators
+        testimonialIndicators.forEach((indicator, i) => {
+            indicator.classList.toggle('active', i === currentTestimonial);
+        });
+    }
+    
+    /**
+     * Navigate tips carousel
+     */
+    function navigateTips(direction) {
+        if (direction === 'next') {
+            currentTip = Math.min(currentTip + 1, tipCount - (window.innerWidth >= 768 ? 3 : 1));
+        } else {
+            currentTip = Math.max(currentTip - 1, 0);
+        }
+        
+        const visibleItems = window.innerWidth >= 992 ? 3 : window.innerWidth >= 768 ? 2 : 1;
+        const maxPosition = Math.max(0, tipCount - visibleItems);
+        currentTip = Math.min(currentTip, maxPosition);
+        
+        const offset = -1 * currentTip * tipCardWidth;
+        tipsTrack.style.transform = `translateX(${offset}px)`;
+        
+        // Update button states
+        if (tipsPrev) tipsPrev.disabled = currentTip === 0;
+        if (tipsNext) tipsNext.disabled = currentTip >= maxPosition;
+    }
+    
+    /**
+     * Smooth scroll to section
+     */
+    function smoothScroll(e) {
+        e.preventDefault();
+        
+        // Close mobile menu if open
+        if (navbarMenu.classList.contains('active')) {
+            toggleMobileMenu();
+        }
+        
+        const targetId = this.getAttribute('href');
+        if (targetId.startsWith('#') && targetId !== '#') {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const navbarHeight = navbar.offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    }
+    
+    /**
+     * Update active navigation link based on scroll position
+     */
+    function updateActiveNavLink() {
+        const scrollPosition = window.scrollY + 200;
+        
+        document.querySelectorAll('section[id]').forEach(section => {
+            const sectionTop = section.offsetTop - navbar.offsetHeight;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                // Remove active class from all links
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Add active class to corresponding link
+                const activeLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        });
+    }
+    
+    /**
+     * Animate 3D heart model on scroll
+     */
+    function animateHeartOnScroll() {
+        const heart = document.getElementById('heart3d');
+        if (heart) {
+            const scrollY = window.scrollY;
+            const rotation = scrollY * 0.05;
+            heart.style.transform = `rotateY(${rotation}deg) rotateX(${scrollY * 0.02}deg)`;
+        }
+    }
+    
+    /**
+     * Set up alert messages
+     */
+    function setupAlerts() {
+        alertMessages.forEach((alert, index) => {
+            setTimeout(() => {
+                alert.style.opacity = '0';
+                setTimeout(() => {
+                    alert.remove();
+                }, 500);
+            }, 5000 + (index * 1000));
+        });
+    }
+    
+    // Initialize tips carousel
+    if (tipsPrev && tipsNext && tipsTrack) {
+        tipsPrev.disabled = true;
+        
+        // Adjust carousel for window resize
+        window.addEventListener('resize', () => {
+            // Recalculate tip card width
+            const newTipCardWidth = document.querySelector('.tip-card')?.offsetWidth + 24;
+            if (newTipCardWidth) {
+                // Reset position when window is resized
+                currentTip = 0;
+                tipsTrack.style.transform = 'translateX(0)';
+                tipsPrev.disabled = true;
+                tipsNext.disabled = false;
+            }
+        });
+    }
+});
+
+
+
+
+/**
+ * Animations JavaScript for SwiftCare Healthcare Platform
+ * This file handles all the scroll-based animations and 3D effects
+ */
+
+ document.addEventListener('DOMContentLoaded', function() {
+    "use strict";
+    
+    // Initialize 3D heart animation
+    initHeartAnimation();
+    
+    // Initialize scroll-based animations
+    initScrollAnimations();
+    
+    // Initialize stat counters
+    initStatCounters();
+    
+    // Initialize carousel autoplay
+    initCarouselAutoplay();
+    
+    /**
+     * Initialize 3D heart animation
+     */
+    function initHeartAnimation() {
+        const heart = document.getElementById('heart3d');
+        if (!heart) return;
+        
+        // Set initial rotation
+        heart.style.transform = 'rotateX(15deg) rotateY(15deg)';
+        
+        // Add mouse move effect for desktop
+        if (window.innerWidth > 768) {
+            document.querySelector('.model-container').addEventListener('mousemove', function(e) {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+                heart.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            });
+            
+            // Reset on mouse leave
+            document.querySelector('.model-container').addEventListener('mouseleave', function() {
+                heart.style.transform = 'rotateX(15deg) rotateY(15deg)';
+            });
+        }
+        
+        // Add pulse effect to the heart
+        animateHeartbeat();
+    }
+    
+    /**
+     * Animate heartbeat effect
+     */
+    function animateHeartbeat() {
+        const heart = document.getElementById('heart3d');
+        if (!heart) return;
+        
+        let scale = 1;
+        let growing = false;
+        const minScale = 0.95;
+        const maxScale = 1.05;
+        const speed = 0.005;
+        
+        function pulse() {
+            if (growing) {
+                scale += speed;
+                if (scale >= maxScale) {
+                    growing = false;
+                }
+            } else {
+                scale -= speed;
+                if (scale <= minScale) {
+                    growing = true;
+                }
+            }
+            
+            // Apply the current scale to the transform
+            const currentTransform = heart.style.transform;
+            const newTransform = currentTransform.replace(/scale\([^)]*\)/, '') + ` scale(${scale})`;
+            heart.style.transform = newTransform;
+            
+            requestAnimationFrame(pulse);
+        }
+        
+        // Start the animation
+        pulse();
+    }
+    
+    /**
+     * Initialize scroll-based animations
+     */
+    function initScrollAnimations() {
+        // Use Intersection Observer for better performance
+        const observerOptions = {
+            root: null, // viewport
+            rootMargin: '0px 0px -100px 0px', // trigger before element is visible
+            threshold: 0.1 // trigger when 10% of element is visible
+        };
+        
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add delay based on data attribute or position
+                    const delay = entry.target.dataset.delay || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, delay);
+                    
+                    // Once animated, no need to observe anymore
+                    fadeObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach((el, index) => {
+            // Set delay based on position if not already set
+            if (!el.dataset.delay) {
+                // If element is in a grid, stagger based on grid position
+                if (el.parentNode.classList.contains('services-grid') || 
+                    el.parentNode.classList.contains('health-info-grid') ||
+                    el.parentNode.classList.contains('stats-grid')) {
+                    el.dataset.delay = (index % 4) * 100; // Stagger by columns
+                } else {
+                    el.dataset.delay = index * 100; // Default stagger
+                }
+            }
+            
+            fadeObserver.observe(el);
+        });
+        
+        // Add parallax effect to sections
+        initParallaxEffect();
+    }
+    
+    /**
+     * Initialize parallax effect for sections
+     */
+    function initParallaxEffect() {
+        const parallaxItems = document.querySelectorAll('.hero-visual, .section-header, .stat-card');
+        
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            
+            parallaxItems.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                const centerY = rect.top + rect.height / 2;
+                const viewportHeight = window.innerHeight;
+                const distanceFromCenter = centerY - viewportHeight / 2;
+                const parallaxFactor = distanceFromCenter * 0.05;
+                
+                // Only apply parallax if element is in viewport
+                if (rect.top < viewportHeight && rect.bottom > 0) {
+                    item.style.transform = `translateY(${-parallaxFactor}px)`;
+                }
+            });
+        });
+    }
+    
+    /**
+     * Initialize stat counters with animation
+     */
+    function initStatCounters() {
+        const counters = document.querySelectorAll('.stat-counter');
+        
+        // Create observer for stat counters
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    const duration = 2000; // 2 seconds
+                    const increment = target / (duration / 16); // 60fps
+                    
+                    let current = 0;
+                    const updateCounter = () => {
+                        current += increment;
+                        if (current < target) {
+                            counter.textContent = Math.floor(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target.toLocaleString();
+                        }
+                    };
+                    
+                    updateCounter();
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, {
+            threshold: 0.5 // Trigger when element is 50% visible
+        });
+        
+        // Observe each counter
+        counters.forEach(counter => {
+            counterObserver.observe(counter);
+        });
+    }
+    
+    /**
+     * Initialize carousel autoplay
+     */
+    function initCarouselAutoplay() {
+        // Testimonial carousel autoplay
+        const testimonialTrack = document.querySelector('.testimonial-track');
+        const testimonialCards = document.querySelectorAll('.testimonial-card');
+        const indicators = document.querySelectorAll('.indicator');
+        
+        if (testimonialTrack && testimonialCards.length > 0) {
+            let currentIndex = 0;
+            const maxIndex = testimonialCards.length - 1;
+            
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % (maxIndex + 1);
+                
+                // Update active indicator
+                indicators.forEach((indicator, i) => {
+                    indicator.classList.toggle('active', i === currentIndex);
+                });
+                
+                // Calculate card width including margin
+                const cardWidth = testimonialCards[0].offsetWidth + 
+                    parseInt(window.getComputedStyle(testimonialCards[0]).marginRight);
+                
+                // Move the carousel
+                testimonialTrack.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            }, 5000); // Change slide every 5 seconds
+        }
+        
+        // Tips carousel autoplay
+        const tipsTrack = document.querySelector('.tips-track');
+        const tipCards = document.querySelectorAll('.tip-card');
+        
+        if (tipsTrack && tipCards.length > 0) {
+            let currentTipIndex = 0;
+            const maxTipIndex = tipCards.length - (window.innerWidth >= 992 ? 3 : window.innerWidth >= 768 ? 2 : 1);
+            
+            const tipAutoplay = setInterval(() => {
+                // Determine visible items based on screen width
+                const visibleItems = window.innerWidth >= 992 ? 3 : window.innerWidth >= 768 ? 2 : 1;
+                const maxPosition = Math.max(0, tipCards.length - visibleItems);
+                
+                currentTipIndex++;
+                if (currentTipIndex > maxPosition) {
+                    currentTipIndex = 0;
+                    // Quick reset to beginning with no animation
+                    tipsTrack.style.transition = 'none';
+                    tipsTrack.style.transform = 'translateX(0)';
+                    // Force reflow
+                    void tipsTrack.offsetWidth;
+                    // Restore transition
+                    tipsTrack.style.transition = 'transform 0.5s ease';
+                } else {
+                    // Calculate card width including margin
+                    const tipCardWidth = tipCards[0].offsetWidth + 24; // 24px is the gap
+                    // Move the carousel
+                    tipsTrack.style.transform = `translateX(-${currentTipIndex * tipCardWidth}px)`;
+                }
+                
+                // Update button states
+                if (document.getElementById('tipsPrev')) {
+                    document.getElementById('tipsPrev').disabled = currentTipIndex === 0;
+                }
+                if (document.getElementById('tipsNext')) {
+                    document.getElementById('tipsNext').disabled = currentTipIndex >= maxPosition;
+                }
+            }, 6000); // Change slide every 6 seconds
+            
+            // Pause autoplay on hover
+            tipsTrack.addEventListener('mouseenter', () => {
+                clearInterval(tipAutoplay);
+            });
+            
+            // Resume autoplay on mouse leave
+            tipsTrack.addEventListener('mouseleave', () => {
+                initCarouselAutoplay();
+            });
+        }
+    }
+    
+    /**
+     * Handle 3D perspective effects for cards
+     */
+    function init3DCardEffects() {
+        const cards = document.querySelectorAll('.service-card, .health-info-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                // Only apply 3D effect on desktop
+                if (window.innerWidth <= 768) return;
+                
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Calculate rotation based on mouse position
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateY = (x - centerX) / 20;
+                const rotateX = (centerY - y) / 20;
+                
+                // Apply the transform
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                card.style.transition = 'transform 0.1s ease';
+                
+                // Add shine effect
+                const shine = card.querySelector('.shine') || document.createElement('div');
+                if (!card.querySelector('.shine')) {
+                    shine.classList.add('shine');
+                    card.appendChild(shine);
+                }
+                
+                // Calculate shine position
+                const percentX = x / rect.width * 100;
+                const percentY = y / rect.height * 100;
+                shine.style.background = `radial-gradient(circle at ${percentX}% ${percentY}%, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 80%)`;
+            });
+            
+            // Reset card on mouse leave
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                card.style.transition = 'transform 0.5s ease';
+                
+                const shine = card.querySelector('.shine');
+                if (shine) {
+                    shine.remove();
+                }
+            });
+        });
+    }
+    
+    // Initialize 3D card effects
+    init3DCardEffects();
+    
+    // Handle page visibility changes to pause/resume animations
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            // Page is hidden, pause intensive animations
+            document.body.classList.add('animations-paused');
+        } else {
+            // Page is visible again, resume animations
+            document.body.classList.remove('animations-paused');
+        }
+    });
+    
+    // Add smooth scrolling for all internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            // Skip if it's just a # link
+            if (this.getAttribute('href') === '#') return;
+            
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                // Get navbar height for offset
+                const navbarHeight = document.querySelector('.navbar')?.offsetHeight || 0;
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - navbarHeight - 20,
+                    behavior: 'smooth'
+                });
+                
+                // Update URL without triggering scroll
+                history.pushState(null, null, targetId);
+            }
+        });
+    });
+    
+    // Add touch swipe support for carousels on mobile
+    initTouchSwipe();
+    
+    /**
+     * Initialize touch swipe for carousels
+     */
+    function initTouchSwipe() {
+        const carousels = [
+            document.querySelector('.testimonial-track'),
+            document.querySelector('.tips-track')
+        ];
+        
+        carousels.forEach(carousel => {
+            if (!carousel) return;
+            
+            let startX;
+            let currentX;
+            let isDragging = false;
+            let initialTransform = 0;
+            
+            // Touch events
+            carousel.addEventListener('touchstart', handleStart, {passive: true});
+            carousel.addEventListener('touchmove', handleMove, {passive: true});
+            carousel.addEventListener('touchend', handleEnd, {passive: true});
+            
+            // Mouse events
+            carousel.addEventListener('mousedown', handleStart);
+            carousel.addEventListener('mousemove', handleMove);
+            carousel.addEventListener('mouseup', handleEnd);
+            carousel.addEventListener('mouseleave', handleEnd);
+            
+            function handleStart(e) {
+                isDragging = true;
+                startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+                initialTransform = getTransformX(carousel);
+                carousel.style.transition = 'none';
+            }
+            
+            function handleMove(e) {
+                if (!isDragging) return;
+                
+                currentX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+                const diffX = currentX - startX;
+                
+                // Apply movement with boundaries
+                const newTransform = initialTransform + diffX;
+                carousel.style.transform = `translateX(${newTransform}px)`;
+            }
+            
+            function handleEnd() {
+                if (!isDragging) return;
+                isDragging = false;
+                
+                const diffX = currentX - startX;
+                carousel.style.transition = 'transform 0.3s ease';
+                
+                // Determine if we should snap to next/prev slide
+                if (Math.abs(diffX) > 50) {
+                    // Calculate current position
+                    const currentPos = getTransformX(carousel);
+                    const itemWidth = carousel.querySelector('*[class$="-card"]').offsetWidth + 
+                                    parseInt(getComputedStyle(carousel.querySelector('*[class$="-card"]')).marginRight || 24);
+                    
+                    // Determine target position
+                    let targetPos;
+                    if (diffX > 0) {
+                        // Swiped right - go to previous
+                        targetPos = Math.ceil(currentPos / itemWidth) * itemWidth;
+                        targetPos = Math.min(0, targetPos); // Don't go past start
+                    } else {
+                        // Swiped left - go to next
+                        targetPos = Math.floor(currentPos / itemWidth) * itemWidth;
+                        
+                        // Calculate max negative transform
+                        const carouselWidth = carousel.scrollWidth;
+                        const containerWidth = carousel.parentElement.clientWidth;
+                        const maxNegativeTransform = -(carouselWidth - containerWidth);
+                        
+                        targetPos = Math.max(maxNegativeTransform, targetPos); // Don't go past end
+                    }
+                    
+                    carousel.style.transform = `translateX(${targetPos}px)`;
+                } else {
+                    // Snap back to original position
+                    carousel.style.transform = `translateX(${initialTransform}px)`;
+                }
+            }
+            
+            // Helper to get current transform X value
+            function getTransformX(element) {
+                const transform = window.getComputedStyle(element).getPropertyValue('transform');
+                if (transform === 'none') return 0;
+                
+                const matrix = transform.match(/^matrix\((.+)\)$/);
+                if (!matrix) return 0;
+                
+                return parseFloat(matrix[1].split(', ')[4]);
+            }
+        });
+    }
+});
+
+    </script>
+    
+</body>
+</html>

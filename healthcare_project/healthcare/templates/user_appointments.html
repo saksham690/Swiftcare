@@ -1,0 +1,223 @@
+<!-- templates/user_appointments.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Appointments</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* static/css/styles.css */
+    
+    /* Reset default styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f5f7fa;
+        color: #333;
+    }
+    
+    /* Navigation styles */
+    nav {
+        background-color: #2c3e50;
+        padding: 1rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    
+    nav a:hover {
+        background-color: #34495e;
+        transform: translateY(-2px);
+    }
+    
+    /* Appointments section */
+    .appointments {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+    }
+    
+    h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2.2rem;
+    }
+    
+    /* Alert messages */
+    .alert {
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        border-radius: 6px;
+        position: relative;
+        transition: opacity 0.3s ease;
+    }
+    
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    .alert-error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+    
+    .alert .btn-close {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.7;
+        transition: opacity 0.2s ease;
+    }
+    
+    .alert .btn-close:hover {
+        opacity: 1;
+    }
+    
+    /* Table styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    th, td {
+        padding: 1rem;
+        text-align: left;
+    }
+    
+    th {
+        background-color: #3498db;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+    
+    tr {
+        transition: background-color 0.3s ease;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+    
+    tr:hover {
+        background-color: #e9ecef;
+        transform: scale(1.01);
+    }
+    
+    /* Status specific styling */
+    td:nth-child(2) {
+        font-weight: 500;
+    }
+    
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+        table {
+            display: block;
+            overflow-x: auto;
+        }
+        
+        th, td {
+            min-width: 120px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+        }
+    }
+    
+    /* Hover effects for table cells */
+    td {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    td:hover {
+        background-color: rgba(52, 152, 219, 0.1);
+        cursor: pointer;
+    }
+    
+    td:hover::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #3498db;
+        transform: scaleX(0);
+        transform-origin: bottom right;
+        animation: underline 0.3s ease forwards;
+    }
+    
+    @keyframes underline {
+        to {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+    }
+    
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'patient_page' %}">Back to Patient Page</a>
+    </nav>
+    <section class="appointments">
+        <h1>My Appointments</h1>
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Requested Date</th>
+                    <th>Status</th>
+                    <th>New Date (if Rescheduled)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.requested_date }}</td>
+                    <td>{{ appointment.status }}</td>
+                    <td>
+                        {% if appointment.new_date %}
+                            {{ appointment.new_date }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</body>
+</html>

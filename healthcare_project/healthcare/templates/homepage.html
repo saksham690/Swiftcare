@@ -1,0 +1,481 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthCare Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <!-- Added Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Added Three.js for 3D effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Added GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <!-- Include the provided styles here -->
+</head>
+<body>
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+
+    <!-- Background Animation Elements -->
+    <div class="bg-animation-wrapper">
+        <div class="bg-blob blob-1"></div>
+        <div class="bg-blob blob-2"></div>
+        <div class="bg-blob blob-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}"><span class="health-icon">&#8741;</span> Swift Care</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link" href="#doctors">Doctors</a></li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary ms-2" href="#" data-bs-toggle="modal" data-bs-target="#signinModal">Sign In</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1>Your Health Journey<br><span class="text-primary">Starts Here</span></h1>
+                    <p class="lead">Experience healthcare reimagined. Schedule appointments with top professionals and take control of your well-being.</p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'signup' %}" class="btn btn-primary">Book Appointment →</a>
+                        <a href="#" class="btn btn-outline-primary ms-3">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1584982751601-97dcc096659c" alt="Doctor with phone" class="img-fluid rounded hero-image">
+                </div>
+            </div>
+        </div>
+        <!-- 3D Medical Model Container -->
+        <!-- <div id="medical-model-container"></div> -->
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+          <div class="row text-center">
+            <div class="col-md-3 stat-item">
+              <h2 class="text-primary">10K+</h2>
+              <p>Active Patients</p>
+            </div>
+            <div class="col-md-3 stat-item">
+              <h2 class="text-primary">100+</h2>
+              <p>Expert Doctors</p>
+            </div>
+            <div class="col-md-3 stat-item">
+              <h2 class="text-primary">50+</h2>
+              <p>Specialties</p>
+            </div>
+            <div class="col-md-3 stat-item">
+              <h2 class="text-primary">24/7</h2>
+              <p>Support</p>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- Doctors Section -->
+      <section id="doctors" class="doctors-section">
+        <div class="container">
+          <h2 class="text-center mb-2">Meet Our Expert Doctors</h2>
+          <p class="text-center mb-5">
+            Our team of highly qualified healthcare professionals is here to
+            provide you with the best medical care.
+          </p>
+  
+          <div class="row">
+            <div class="col-md-4">
+              <div class="doctor-card">
+                <img
+                  src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2"
+                  class="card-img-top"
+                  alt="Dr. Sarah Johnson"
+                />
+                <div class="card-body">
+                  <h5>Dr. Sarah Johnson</h5>
+                  <p class="specialty">Cardiology</p>
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-text">4.9 (127 reviews)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="doctor-card">
+                <img
+                  src="https://images.unsplash.com/photo-1537368910025-700350fe46c7"
+                  class="card-img-top"
+                  alt="Dr. Michael Chen"
+                />
+                <div class="card-body">
+                  <h5>Dr. Michael Chen</h5>
+                  <p class="specialty">Neurology</p>
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-text">4.8 (93 reviews)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="doctor-card">
+                <img
+                  src="https://images.unsplash.com/photo-1594824476967-48c8b964273f"
+                  class="card-img-top"
+                  alt="Dr. Emily Rodriguez"
+                />
+                <div class="card-body">
+                  <h5>Dr. Emily Rodriguez</h5>
+                  <p class="specialty">Pediatrics</p>
+                  <div class="rating">
+                    <span class="stars">★★★★★</span>
+                    <span class="rating-text">4.9 (156 reviews)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- Services Section -->
+      <section id="services" class="services-section">
+        <div class="container">
+          <h2 class="text-center mb-2">Comprehensive Healthcare Services</h2>
+          <p class="text-center mb-5">
+            From routine check-ups to specialized treatments, we offer a wide
+            range of medical services.
+          </p>
+  
+          <div class="row">
+            <div class="col-md-6">
+              <div class="service-card">
+                <div class="service-icon"><i class="fas fa-user-md"></i></div>
+                <h3>Primary Care</h3>
+                <p>
+                  Regular check-ups and preventive care to maintain your health
+                  and catch issues early.
+                </p>
+                <ul class="service-list">
+                  <li>Annual physicals</li>
+                  <li>Vaccinations</li>
+                  <li>Health screenings</li>
+                  <li>Chronic disease management</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="service-card">
+                <div class="service-icon"><i class="fas fa-hospital"></i></div>
+                <h3>Specialized Care</h3>
+                <p>
+                  Expert treatment for specific medical conditions and specialized
+                  health needs.
+                </p>
+                <ul class="service-list">
+                  <li>Cardiology</li>
+                  <li>Neurology</li>
+                  <li>Orthopedics</li>
+                  <li>Dermatology</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <!-- Features Section -->
+      <section class="features-section">
+        <div class="container">
+          <h2 class="text-center mb-2">Why Choose HealthCare Hub?</h2>
+          <p class="text-center mb-5">
+            Experience healthcare that puts you first with our comprehensive suite
+            of services.
+          </p>
+  
+          <div class="row">
+            <div class="col-md-4">
+              <div class="feature-card text-center">
+                <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
+                <h3>Smart Scheduling</h3>
+                <p>
+                  Book appointments easily and manage your healthcare schedule
+                  efficiently.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="feature-card text-center">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Secure Platform</h3>
+                <p>
+                  Your health information is protected with state-of-the-art
+                  security measures.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="feature-card text-center">
+                <div class="feature-icon"><i class="fas fa-heartbeat"></i></div>
+                <h3>Personalized Care</h3>
+                <p>
+                  Receive tailored healthcare solutions that meet your unique
+                  needs.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+    <!-- Added Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 footer-column">
+                    <a href="#" class="footer-logo"><span class="health-icon">&#8741;</span> Swift Care</a>
+                    <p class="footer-text">Providing quality healthcare services to improve and maintain your well-being. Your health is our priority.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 footer-column">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Doctors</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 footer-column">
+                    <h5>Our Services</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Primary Care</a></li>
+                        <li><a href="#">Specialized Care</a></li>
+                        <li><a href="#">Emergency Care</a></li>
+                        <li><a href="#">Telemedicine</a></li>
+                        <li><a href="#">Health Checkups</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 footer-column">
+                    <h5>Contact Us</h5>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Healthcare Ave, Medical City</li>
+                        <li><i class="fas fa-phone me-2"></i> (123) 456-7890</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@swiftcare.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; {% now "Y" %} Swift Care. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sign In Modal -->
+    <div class="modal fade" id="signinModal" tabindex="-1" aria-labelledby="signinModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signinModalLabel">Sign In</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <a href="{% url 'login' %}" class="btn btn-primary">Login as Patient</a>
+                    <a href="{% url 'doclog' %}" class="btn btn-primary">Login as Doctor</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- 3D Effects and Animation Scripts -->
+    <script>
+        // Initialize Three.js scene for 3D medical model
+        function initMedicalModel() {
+            const container = document.getElementById('medical-model-container');
+            
+            // Create scene, camera, and renderer
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            
+            // Create a simple heart model (simplified representation)
+            const heartGeometry = new THREE.SphereGeometry(1, 32, 32);
+            const heartMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xff4444,
+                shininess: 100,
+                transparent: true,
+                opacity: 0.9
+            });
+            const heart = new THREE.Mesh(heartGeometry, heartMaterial);
+            scene.add(heart);
+            
+            // Add a smaller sphere to create heart shape
+            const topGeometry = new THREE.SphereGeometry(0.8, 32, 32);
+            const topMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xff4444,
+                shininess: 100,
+                transparent: true,
+                opacity: 0.9
+            });
+            const topHeart = new THREE.Mesh(topGeometry, topMaterial);
+            topHeart.position.set(0, 0.7, 0);
+            scene.add(topHeart);
+            
+            // Add lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const pointLight = new THREE.PointLight(0xffffff, 1);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+            
+            // Position camera
+            camera.position.z = 5;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Rotate the heart
+                heart.rotation.y += 0.01;
+                heart.rotation.x += 0.005;
+                topHeart.rotation.y += 0.01;
+                topHeart.rotation.x += 0.005;
+                
+                // Pulsing effect
+                const pulseFactor = Math.sin(Date.now() * 0.002) * 0.1 + 1;
+                heart.scale.set(pulseFactor, pulseFactor, pulseFactor);
+                topHeart.scale.set(pulseFactor, pulseFactor, pulseFactor);
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (container.clientWidth > 0 && container.clientHeight > 0) {
+                    camera.aspect = container.clientWidth / container.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(container.clientWidth, container.clientHeight);
+                }
+            });
+        }
+        
+        // Initialize animations when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize 3D model if screen is large enough
+            if (window.innerWidth > 992) {
+                initMedicalModel();
+            }
+            
+            // Initialize GSAP animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate stats counters
+            const statItems = document.querySelectorAll('.stat-item');
+            statItems.forEach((item, index) => {
+                gsap.to(item, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    delay: 0.2 * index,
+                    scrollTrigger: {
+                        trigger: '.stats-section',
+                        start: 'top 80%'
+                    }
+                });
+            });
+            
+            // Animate doctor cards
+            const doctorCards = document.querySelectorAll('.doctor-card');
+            doctorCards.forEach((card, index) => {
+                gsap.from(card, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.8,
+                    delay: 0.2 * index,
+                    scrollTrigger: {
+                        trigger: '.doctors-section',
+                        start: 'top 70%'
+                    }
+                });
+            });
+            
+            // Animate service cards
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach((card, index) => {
+                gsap.from(card, {
+                    opacity: 0,
+                    x: index % 2 === 0 ? -50 : 50,
+                    duration: 0.8,
+                    scrollTrigger: {
+                        trigger: '.services-section',
+                        start: 'top 70%'
+                    }
+                });
+            });
+            
+            // Animate feature cards
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                gsap.from(card, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.8,
+                    delay: 0.15 * index,
+                    scrollTrigger: {
+                        trigger: '.features-section',
+                        start: 'top 70%'
+                    }
+                });
+            });
+            
+            // Parallax effect for hero image
+            gsap.to('.hero-image', {
+                y: -30,
+                scrollTrigger: {
+                    trigger: '.hero-section',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+        });
+    </script>
+</body>
+</html>

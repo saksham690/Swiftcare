@@ -1,0 +1,145 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+}
+
+/* Root Variables */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --text-color: #1f2937;
+    --light-bg: #f3f4f6;
+    --white: #ffffff;
+}
+
+/* Left Side Background */
+.left-side {
+    background: url('/static/images/healthcare-bg.jpg') no-repeat center center/cover;
+    position: relative;
+}
+
+.left-side .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(37, 99, 235, 0.7);
+}
+
+.left-side h1,
+.left-side p {
+    position: relative;
+    z-index: 1;
+}
+
+/* OTP Container */
+.otp-container {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+.otp-container h2 {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.otp-container .form-label {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.otp-container .form-control {
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.otp-container .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    outline: none;
+}
+
+.otp-container .btn-primary {
+    background: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+
+.otp-container .btn-primary:hover {
+    background: var(--secondary-color);
+}
+
+.otp-container .text-primary {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.otp-container .text-primary:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+.otp-container .text-muted {
+    color: #6b7280;
+}
+
+/* Alert Styles */
+.alert {
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.alert-success {
+    background: #e6fffa;
+    color: #0d9488;
+}
+
+.alert-error {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .left-side {
+        display: none !important;
+    }
+
+    .otp-container {
+        margin: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .otp-container {
+        padding: 2rem !important;
+    }
+
+    .otp-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .otp-container .btn-primary {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
